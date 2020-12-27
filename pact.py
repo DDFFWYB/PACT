@@ -56,7 +56,7 @@ def pa_cylinder(L, R=1, A=1, Vs=1500):
     n3 = len(vt3)
 
     # When L - R < vt < L + R
-    p2_temp = p2  # 初始化必须写在循环外面！写在循环里面会重复初始化！
+    p2_temp = p2
     for n in range(n2):
         vt = vt2[n] * Vs
         integral_min = (L - R) / vt
