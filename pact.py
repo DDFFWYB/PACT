@@ -13,13 +13,11 @@ def pa_plane(L, D=1, A=1, Vs=1500):
     def p(x, t):
         return 1/2 * p0(x - Vs * t) + 1/2 * p0(x + Vs * t)
 
-    plt.figure()
     t = np.linspace(0, (L + D) / Vs, 1000)
     plt.plot(t*Vs/D, p(L, t))
     font = {'size': 18}
     plt.title('Plane', fontdict=font)
     plt.xlabel('D / Vs', fontdict=font)
-    plt.show()
 
 
 def pa_sphere(L, R=1, A=1, Vs=1500):
@@ -33,13 +31,11 @@ def pa_sphere(L, R=1, A=1, Vs=1500):
             (r - Vs * t) / 2 / r * p0(-r + Vs * t) + \
             (r - Vs * t) / 2 / r * p0(r - Vs * t)
 
-    plt.figure()
     t = np.linspace(0, (L + 2 * R) / Vs, 1000)
     plt.plot(t*Vs/R, p(L, t))
     font = {'size': 18}
     plt.title('Sphere', fontdict=font)
     plt.xlabel('R / Vs', fontdict=font)
-    plt.show()
 
 
 def pa_cylinder(L, R=1, A=1, Vs=1500):
@@ -92,16 +88,18 @@ def pa_cylinder(L, R=1, A=1, Vs=1500):
     p3 = np.append(p3, p3[n3 - 2])
 
     # Plot
-    plt.figure()
     p = np.hstack([p1, p2, p3])
     plt.plot(t*Vs/R, A*p/Vs)
     font = {'size': 18}
     plt.title('Cylinder', fontdict=font)
     plt.xlabel('R / Vs', fontdict=font)
-    plt.show()
 
 
 if __name__ == '__main__':
+    plt.figure(1)
     pa_plane(1)
+    plt.figure(2)
     pa_sphere(2)
+    plt.figure(3)
     pa_cylinder(2)
+    plt.show()
