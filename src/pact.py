@@ -95,6 +95,28 @@ def pa_cylinder(L, R=1, A=1, Vs=1500):
     plt.xlabel('R / Vs', fontdict=font)
 
 
+def pa_smallball(D, R, S0=1, SIG=1, k=1, VS=1500):
+    t0 = 3*SIG
+    dt = D/VS/100
+    ts = np.linspace(0, 4*(D + R) / VS, int(2*(D + R) / VS / dt) + 1)
+
+    p = 0 * ts
+    integrate_min = D
+    integrate_max = np.sqrt(D**2 + R**2)
+
+    for i, t in enumerate(ts):
+        def f(r):
+            return -r*(VS*t - r - t0)*np.exp(-(VS*t - r - t0)**2 / (2*SIG**2))
+
+        p[i], _ = integrate.quad(f, integrate_min, integrate_max)
+        p[i] *= 2*k*np.pi*S0*VS / SIG**2
+
+    plt.plot(ts*VS/D, p)
+    font = {'size': 18}
+    plt.title('Small Ball', fontdict=font)
+    plt.xlabel('D / VS', fontdict=font)
+
+
 if __name__ == '__main__':
     plt.figure(1)
     pa_plane(1)
@@ -102,4 +124,6 @@ if __name__ == '__main__':
     pa_sphere(2)
     plt.figure(3)
     pa_cylinder(2)
+    plt.figure(4)
+    pa_smallball(1, 1)
     plt.show()
