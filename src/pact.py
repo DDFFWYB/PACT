@@ -96,7 +96,7 @@ def pa_cylinder(L, R=1, A=1, Vs=1500):
 
 
 def pa_smallball(D, R, S0=1, SIG=1, k=1, VS=1500):
-    t0 = 3*SIG
+    t0 = 3*SIG/VS
     dt = D/VS/100
     ts = np.linspace(0, 4*(D + R) / VS, int(2*(D + R) / VS / dt) + 1)
 
@@ -106,7 +106,7 @@ def pa_smallball(D, R, S0=1, SIG=1, k=1, VS=1500):
 
     for i, t in enumerate(ts):
         def f(r):
-            return -r*(VS*t - r - t0)*np.exp(-(VS*t - r - t0)**2 / (2*SIG**2))
+            return -r*(VS*t-VS*t0-r) * np.exp(-(VS*t-VS*t0-r)**2/(2*SIG**2))
 
         p[i], _ = integrate.quad(f, integrate_min, integrate_max)
         p[i] *= 2*k*np.pi*S0*VS / SIG**2
